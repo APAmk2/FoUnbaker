@@ -2,6 +2,8 @@
 
 void file_t::read(ByteReader* reader)
 {
+	check_num1 = reader->u8();
+	if (check_num1 != 42) return;
 	hdr_t newHdr;
 	newHdr.read(reader);
 	hdr = newHdr;
@@ -17,7 +19,6 @@ void file_t::read(ByteReader* reader)
 
 void hdr_t::read(ByteReader* reader)
 {
-	check_num1 = reader->u8();
 	frames_count = reader->u16();
 	anim_ticks = reader->u16();
 	dirs = reader->u8();
@@ -60,6 +61,7 @@ void oldfile_t::read(ByteReader* reader)
 {
 	width = reader->u32();
 	height = reader->u32();
+	if(width == 1196314761) return;
 	for (size_t i = 0, len = width * height; i < len; i++)
 	{
 		ucolor currPixel{ reader->u8(), reader->u8(), reader->u8(), reader->u8() };

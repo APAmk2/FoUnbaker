@@ -28,7 +28,6 @@ public:
 class hdr_t
 {
 public:
-	uint8_t check_num1;
 	uint16_t frames_count;
 	uint16_t anim_ticks;
 	uint8_t dirs;
@@ -50,6 +49,7 @@ public:
 class file_t
 {
 public:
+	uint8_t check_num1;
 	hdr_t hdr;
 	std::vector<data_t> data;
 

@@ -29,14 +29,14 @@ bool decodeGraphics(filesystem::path& filename)
     file_t file;
     file.read(reader);
 
-    if (file.hdr.check_num1 != 42) return false;
+    if (file.check_num1 != 42) return false;
 
     for (size_t currData = 0; currData < file.hdr.dirs; currData++)
     {
         for (size_t currFrame = 0; currFrame < file.hdr.frames_count; currFrame++)
         {
             frame_t* currFrame_ptr = &file.data[currData].frames[currFrame];
-            writePng(filename.stem().string() + to_string(currData) + "_" + to_string(currFrame), currFrame_ptr->pixels, currFrame_ptr->width, currFrame_ptr->height);
+            writePng(filename.parent_path().string() + "/" + filename.stem().string() + to_string(currData) + "_" + to_string(currFrame), currFrame_ptr->pixels, currFrame_ptr->width, currFrame_ptr->height);
         }
     }
 
@@ -49,8 +49,9 @@ void decodeOldGraphics(filesystem::path& filename)
     reader->Reset(filename.string(), ByteReader::BigEndian);
     oldfile_t file;
     file.read(reader);
+    if (file.width == 1196314761) return;
 
-    writePng(filename.stem().string() + "_unbake", file.pixels, file.width, file.height);
+    writePng(filename.parent_path().string() + "/" + filename.stem().string() + "_unbake", file.pixels, file.width, file.height);
 }
 
 int main(int argc, char* argv[]) 
