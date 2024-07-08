@@ -55,3 +55,14 @@ void frame_t::read(ByteReader* reader)
 		shared_indx = reader->u16();
 	}
 }
+
+void oldfile_t::read(ByteReader* reader)
+{
+	width = reader->u32();
+	height = reader->u32();
+	for (size_t i = 0, len = width * height; i < len; i++)
+	{
+		ucolor currPixel{ reader->u8(), reader->u8(), reader->u8(), reader->u8() };
+		pixels.push_back(currPixel);
+	}
+}

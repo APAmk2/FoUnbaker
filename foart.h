@@ -55,3 +55,13 @@ public:
 
 	void read(ByteReader* reader);
 };
+
+class oldfile_t // Old file format, only for FO2 graphics support - APAMk2
+{
+public:
+	uint32_t width;
+	uint32_t height;
+	std::vector<ucolor> pixels;
+
+	void read(ByteReader* reader);
+};
